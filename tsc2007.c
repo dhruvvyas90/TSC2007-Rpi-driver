@@ -175,13 +175,20 @@ static irqreturn_t tsc2007_soft_irq(int irq, void *handle)
 	struct tsc2007 *ts = handle;
 	struct input_dev *input = ts->input;
 	struct ts_event tc;
+	u32 x[5];
+	u32 y[5];
+	u8 count;
+	u8 count2;
+	u32 temp;
 	u32 rt;
-
+	u8 sample;
 	while (!ts->stopped && tsc2007_is_pen_down(ts)) {
 
+		count = 0;
+		sample = 5;
 		/* pen is down, continue with the measurement */
-		tsc2007_read_values(ts, &tc);
-
+		//reading values and getting mean
+		//tsc2007_read_values(ts, &tc);
 		rt = tsc2007_calculate_pressure(ts, &tc);
 
 		if (!rt && !ts->get_pendown_state) {
@@ -192,12 +199,39 @@ static irqreturn_t tsc2007_soft_irq(int irq, void *handle)
 			 */
 			break;
 		}
-
+		tsc2007_read_values(ts, &tc);
 		if (rt <= ts->max_rt) {
 			dev_dbg(&ts->client->dev,
 				"DOWN point(%4d,%4d), pressure (%4u)\n",
 				tc.x, tc.y, rt);
-
+			//multiple samples to avoid spurious signals
+			for(count=0;count<sample;count++)
+                	{
+                	        tsc2007_read_values(ts, &tc);
+                	        rt = tsc2007_calculate_pressure(ts, &tc);
+				x[count++] = tc.x;
+                	        y[count++] = tc.y;
+                	}
+			for(count=0;count<sample-1;count++)
+                	{
+                	        for(count2=count+1;count2<sample;count2++)
+                	        {
+                	                if(x[count] > x[count2])
+                	                {
+                	                        temp = x[count];
+                	                        x[count] = x[count2];
+                	                        x[count2] = temp;
+                	                }
+                	                if(y[count] > y[count2])
+                	                {
+                	                        temp = y[count];
+                	                        y[count] = y[count2];
+                	                        y[count2] = temp;
+                	                }
+                	        }
+                	}
+                	tc.x = x[2];
+                	tc.y = y[2];
 			input_report_key(input, BTN_TOUCH, 1);
 			input_report_abs(input, ABS_X, tc.x);
 			input_report_abs(input, ABS_Y, tc.y);

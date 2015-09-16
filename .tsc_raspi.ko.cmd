@@ -1,0 +1,1 @@
+cmd_/home/pi/github/TSC2007-Rpi-driver/tsc_raspi.ko := ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/pi/github/TSC2007-Rpi-driver/tsc_raspi.ko /home/pi/github/TSC2007-Rpi-driver/tsc_raspi.o /home/pi/github/TSC2007-Rpi-driver/tsc_raspi.mod.o
