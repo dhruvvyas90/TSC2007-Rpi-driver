@@ -29,6 +29,8 @@
 #include <linux/of_device.h>
 #include <linux/of.h>
 #include <linux/of_gpio.h>
+#include <linux/delay.h>
+
 
 #define TSC2007_MEASURE_TEMP0		(0x0 << 4)
 #define TSC2007_MEASURE_AUX		(0x2 << 4)
@@ -175,22 +177,22 @@ static irqreturn_t tsc2007_soft_irq(int irq, void *handle)
 	struct tsc2007 *ts = handle;
 	struct input_dev *input = ts->input;
 	struct ts_event tc;
-	u32 x[5];
-	u32 y[5];
-	u8 count;
-	u8 count2;
-	u32 temp;
+	u16 x;
+	u16 y;
 	u32 rt;
-	u8 sample;
 	while (!ts->stopped && tsc2007_is_pen_down(ts)) {
-
-		count = 0;
-		sample = 5;
 		/* pen is down, continue with the measurement */
 		//reading values and getting mean
-		//tsc2007_read_values(ts, &tc);
+		tsc2007_read_values(ts, &tc);
+		mdelay(25);
+		x = tc.x;
+		y = tc.y;
+		tsc2007_read_values(ts, &tc);
+		if(!((x < tc.x + 50 && x > tc.x - 50) && (y < tc.y + 50 && y > tc.y - 50)))
+		{
+			break;
+		}
 		rt = tsc2007_calculate_pressure(ts, &tc);
-
 		if (!rt && !ts->get_pendown_state) {
 			/*
 			 * If pressure reported is 0 and we don't have
@@ -204,34 +206,6 @@ static irqreturn_t tsc2007_soft_irq(int irq, void *handle)
 			dev_dbg(&ts->client->dev,
 				"DOWN point(%4d,%4d), pressure (%4u)\n",
 				tc.x, tc.y, rt);
-			//multiple samples to avoid spurious signals
-			for(count=0;count<sample;count++)
-                	{
-                	        tsc2007_read_values(ts, &tc);
-                	        rt = tsc2007_calculate_pressure(ts, &tc);
-				x[count++] = tc.x;
-                	        y[count++] = tc.y;
-                	}
-			for(count=0;count<sample-1;count++)
-                	{
-                	        for(count2=count+1;count2<sample;count2++)
-                	        {
-                	                if(x[count] > x[count2])
-                	                {
-                	                        temp = x[count];
-                	                        x[count] = x[count2];
-                	                        x[count2] = temp;
-                	                }
-                	                if(y[count] > y[count2])
-                	                {
-                	                        temp = y[count];
-                	                        y[count] = y[count2];
-                	                        y[count2] = temp;
-                	                }
-                	        }
-                	}
-                	tc.x = x[2];
-                	tc.y = y[2];
 			input_report_key(input, BTN_TOUCH, 1);
 			input_report_abs(input, ABS_X, tc.x);
 			input_report_abs(input, ABS_Y, tc.y);

@@ -58,7 +58,7 @@ static struct tsc2007_platform_data tsc2007_pdata = {
 	.max_rt		= 1 << 12,
 
 	//.poll_delay	= 5,
-	.poll_period	= 50,
+	.poll_period	= 5,
 
 	.fuzzx		= 64,
 	.fuzzy		= 64,

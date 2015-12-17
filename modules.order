@@ -1,2 +1,2 @@
-kernel//home/pi/github/TSC2007-Rpi-driver/tsc2007.ko
-kernel//home/pi/github/TSC2007-Rpi-driver/tsc_raspi.ko
+kernel//home/pi/TSC2007-Rpi-driver/tsc2007.ko
+kernel//home/pi/TSC2007-Rpi-driver/tsc_raspi.ko

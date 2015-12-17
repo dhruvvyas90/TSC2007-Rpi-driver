@@ -1,8 +1,8 @@
-cmd_/home/pi/github/TSC2007-Rpi-driver/tsc2007.o := gcc -Wp,-MD,/home/pi/github/TSC2007-Rpi-driver/.tsc2007.o.d  -nostdinc -isystem /usr/lib/gcc/arm-linux-gnueabihf/4.9/include -I./arch/arm/include -Iarch/arm/include/generated  -Iinclude -I./arch/arm/include/uapi -Iarch/arm/include/generated/uapi -I./include/uapi -Iinclude/generated/uapi -include ./include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Iarch/arm/mach-bcm2708/include -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-dwarf2-cfi-asm -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mabi=aapcs-linux -mno-thumb-interwork -mfpu=vfp -funwind-tables -marm -D__LINUX_ARM_ARCH__=6 -march=armv6 -mtune=arm1136j-s -msoft-float -Uarm -fno-delete-null-pointer-checks -O2 --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -Werror=date-time -DCC_HAVE_ASM_GOTO  -DMODULE  -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(tsc2007)"  -D"KBUILD_MODNAME=KBUILD_STR(tsc2007)" -c -o /home/pi/github/TSC2007-Rpi-driver/.tmp_tsc2007.o /home/pi/github/TSC2007-Rpi-driver/tsc2007.c
+cmd_/home/pi/TSC2007-Rpi-driver/tsc2007.o := gcc -Wp,-MD,/home/pi/TSC2007-Rpi-driver/.tsc2007.o.d  -nostdinc -isystem /usr/lib/gcc/arm-linux-gnueabihf/4.8/include -I./arch/arm/include -Iarch/arm/include/generated  -Iinclude -I./arch/arm/include/uapi -Iarch/arm/include/generated/uapi -I./include/uapi -Iinclude/generated/uapi -include ./include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Iarch/arm/mach-bcm2708/include -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-dwarf2-cfi-asm -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mabi=aapcs-linux -mno-thumb-interwork -mfpu=vfp -funwind-tables -marm -D__LINUX_ARM_ARCH__=6 -march=armv6 -mtune=arm1136j-s -msoft-float -Uarm -fno-delete-null-pointer-checks -O2 --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -pg -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -DCC_HAVE_ASM_GOTO  -DMODULE  -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(tsc2007)"  -D"KBUILD_MODNAME=KBUILD_STR(tsc2007)" -c -o /home/pi/TSC2007-Rpi-driver/.tmp_tsc2007.o /home/pi/TSC2007-Rpi-driver/tsc2007.c
 
-source_/home/pi/github/TSC2007-Rpi-driver/tsc2007.o := /home/pi/github/TSC2007-Rpi-driver/tsc2007.c
+source_/home/pi/TSC2007-Rpi-driver/tsc2007.o := /home/pi/TSC2007-Rpi-driver/tsc2007.c
 
-deps_/home/pi/github/TSC2007-Rpi-driver/tsc2007.o := \
+deps_/home/pi/TSC2007-Rpi-driver/tsc2007.o := \
     $(wildcard include/config/of.h) \
   include/linux/module.h \
     $(wildcard include/config/sysfs.h) \
@@ -61,7 +61,7 @@ deps_/home/pi/github/TSC2007-Rpi-driver/tsc2007.o := \
     $(wildcard include/config/prove/locking.h) \
     $(wildcard include/config/panic/timeout.h) \
     $(wildcard include/config/ring/buffer.h) \
-  /usr/lib/gcc/arm-linux-gnueabihf/4.9/include/stdarg.h \
+  /usr/lib/gcc/arm-linux-gnueabihf/4.8/include/stdarg.h \
   include/linux/linkage.h \
   include/linux/stringify.h \
   include/linux/export.h \
@@ -697,7 +697,9 @@ deps_/home/pi/github/TSC2007-Rpi-driver/tsc2007.o := \
     $(wildcard include/config/irq/domain.h) \
   include/linux/gpio/consumer.h \
     $(wildcard include/config/gpio/sysfs.h) \
+  include/linux/delay.h \
+  arch/arm/include/asm/delay.h \
 
-/home/pi/github/TSC2007-Rpi-driver/tsc2007.o: $(deps_/home/pi/github/TSC2007-Rpi-driver/tsc2007.o)
+/home/pi/TSC2007-Rpi-driver/tsc2007.o: $(deps_/home/pi/TSC2007-Rpi-driver/tsc2007.o)
 
-$(deps_/home/pi/github/TSC2007-Rpi-driver/tsc2007.o):
+$(deps_/home/pi/TSC2007-Rpi-driver/tsc2007.o):
